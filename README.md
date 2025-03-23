@@ -8,9 +8,12 @@ The idea of the application is pretty simple - we make a call to an API, which t
 
 - [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)
 
+https://jhouse233.github.io/se_project_react
+
+
 ### Project Features
 
 * Javascript using React framework
 * HTML & CSS
 * BEM methodology
-    
+
