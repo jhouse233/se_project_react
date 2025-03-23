@@ -1,0 +1,27 @@
+
+.main {
+    padding: 28px 40px 85px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.main__content {
+    max-width: 1360px;
+    /* width: 100%; */
+    margin: 0 auto;
+    padding: 0;
+}
+
+.weather-container {
+    width: 100%;
+    max-width: 1440px;
+}
+
+.cards__grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 75px 0 0;
+    /* overflow: hidden; */
+}
