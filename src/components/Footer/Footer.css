@@ -1,0 +1,21 @@
+.footer {
+    max-width: 1440px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "CabinetGrotesk-Medium", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0 auto;
+    /* margin: 80px 0 24px; */
+    color: black;
+}
+
+.footer__copyright {
+    margin: 0 40px;
+}
+
+.footer__production-year {
+    margin: 0 40px;
+}

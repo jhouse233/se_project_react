@@ -15,6 +15,7 @@ import cap from '../../assets/cap.svg'
 
 
 
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cards, setCards] = useState([
@@ -102,7 +103,7 @@ function App() {
   return (
       <div className="page">
         <div className="page__content">
-          <Header onOpenModal={handleOpenModal} />
+          <Header onOpenModal={handleOpenModal} location=", New York"/>
 
             <ModalWithForm 
               title="New Garment"
@@ -110,6 +111,8 @@ function App() {
               onClose={handleCloseModal}
               onSubmit={handleAddGarment}
               isOpen={isModalOpen}
+              inputName= "Name"
+              inputImageUrl="Image URL"
             />
 
           <Main weatherData={weatherData}
