@@ -1,20 +1,27 @@
 import './ModalWithForm.css';
 import closeButton from '../../assets/modal__close.svg';
 
-function ModalWithForm({ children, title, name, onClose, isOpen }) {
-    console.log('Modal isOpen state:', isOpen)
+import addGarment from '../../assets/add_garment_disabled.svg';
+
+function ModalWithForm({ children, title, name, onClose, isOpen, onSubmit }) {
+    
     return (
 
         <div className={`modal modal_type_${name} ${isOpen ? "modal__opened" : ""}`}>
             <div className="modal__content">
-                <button
-                    type="button"
-                    onClick={onClose}
-                    className="modal__close">
+                <h3 className="modal__title">{title}</h3>
+                <button className="modal__close" type="button" onClick={onClose}>
                     <img src={closeButton} alt="close button" />
                 </button>
-                <h3 className="modal__title">{title}</h3>
-                {children}
+                <form className="modal__form" onSubmit={(e) => {
+                    e.preventDefault();
+                    onSubmit();
+                }}>
+                    {children}
+                    <button className="modal__submit" type="submit">
+                        <img src={addGarment} alt="" className="modal__submit-icon" />
+                    </button>
+                </form>
             </div>
         </div>
     );

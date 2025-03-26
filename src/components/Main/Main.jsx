@@ -58,9 +58,9 @@ export default function Main({weatherData, cards, onCardClick}) {
                     <ul className="cards__grid">
                         {cards
                         .filter((card) => {
-                            console.log('Card weather type:', JSON.stringify(card.weatherType))
-                            console.log('Current Weather type:', JSON.stringify(currentWeatherType))
-                            console.log('Are they equal?:', card.weatherType === currentWeatherType)
+                            // console.log('Card weather type:', JSON.stringify(card.weatherType))
+                            // console.log('Current Weather type:', JSON.stringify(currentWeatherType))
+                            // console.log('Are they equal?:', card.weatherType === currentWeatherType)
 
                             return card.weatherType === currentWeatherType
                         })

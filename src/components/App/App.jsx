@@ -23,10 +23,8 @@ const isValidUrl = (url) => {
   }
 }
 
-function AddItemForm({ onSubmit, nameLabel, imageUrlLabel, weatherTypeLabel }) {
-  const [itemName, setItemName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weatherType, setWeatherType] = useState("hot");
+function AddItemForm({ nameLabel, imageUrlLabel, weatherTypeLabel, itemName, setItemName, imageUrl, setImageUrl, weatherType, setWeatherType }) {
+
 
   const weatherOptions = [
       { id: "hot", value: "hot", label: "Hot" },
@@ -34,22 +32,24 @@ function AddItemForm({ onSubmit, nameLabel, imageUrlLabel, weatherTypeLabel }) {
       { id: "cold", value: "cold", label: "Cold" }
   ];
 
-  const handleSubmit = (event) => {
-      event.preventDefault();
-      if (isValidUrl(imageUrl)) {
-          const formData = {
-              itemName: itemName,
-              imageUrl: imageUrl,
-              weatherType: weatherType
-          };
-          onSubmit(formData);
-      } else {
-          alert("Please enter a valid URL");
-      }
-  }
+  // const handleSubmit = (event) => {
+  //     event.preventDefault();
+  //     if (isValidUrl(imageUrl)) {
+  //         const formData = {
+  //             itemName: itemName,
+  //             imageUrl: imageUrl,
+  //             weatherType: weatherType
+  //         };
+  //         onSubmit(formData);
+  //     } else {
+  //         alert("Please enter a valid URL");
+  //     }
+  // }
+
 
   return (
-      <form className="modal__form" onSubmit={handleSubmit}>
+      // <form className="modal__form" onSubmit={handleSubmit}>
+        <>
           <label className="modal__label">
             {nameLabel}
               <input 
@@ -93,11 +93,13 @@ function AddItemForm({ onSubmit, nameLabel, imageUrlLabel, weatherTypeLabel }) {
                   ))}
               </div>
           </label>
+        </>
+        
 
-          <button className="modal__submit" type="submit">
-              <img src={addGarment} alt="" className="modal__submit-icon" />
-          </button>
-      </form>
+          // <button className="modal__submit" type="submit">
+              // <img src={addGarment} alt="" className="modal__submit-icon" />
+          // </button>
+      // </form>
   );
 }
 
@@ -135,31 +137,35 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
 
+  const [itemName, setItemName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [weatherType, setWeatherType] = useState("hot");
+
 
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        console.log('Fetching weather data...')
+        // console.log('Fetching weather data...')
         const data = await getWeatherData('New York');
-        console.log('Weather data received in App', data)
+        // console.log('Weather data received in App', data)
         setWeatherData(data)
-        console.log('Weather Data after setState:', weatherData)
+        // console.log('Weather Data after setState:', weatherData)
       } catch(error) {
-          console.error('Error:', error)
+          // console.error('Error:', error)
       }
     };
     fetchWeatherData();
   }, []);
 
   useEffect(() => {
-    console.log('weatherData updated', weatherData);
+    // console.log('weatherData updated', weatherData);
   }, [weatherData]);
 
 
   const handleCloseModal = () => {
-    console.log('Close button clicked');
+    // console.log('Close button clicked');
     setIsModalOpen(false);
-    console.log('Modal state after setting to false:', isModalOpen)
+    // console.log('Modal state after setting to false:', isModalOpen)
   };
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -167,18 +173,35 @@ function App() {
   // const handleCardClick = (card) => {
   //   console.log('Card Clicked:', card)
   // }
-  console.log('Weather Data:', weatherData);
+  // console.log('Weather Data:', weatherData);
 
-  const handleAddGarment = (garmentData) => {
-    console.log('Form submitted')
-    const newCard = {
-      _id: cards.length + 1,
-      name: garmentData.itemName,
-      weatherType: garmentData.weatherType,
-      imageUrl: garmentData.imageUrl
+  // const handleAddGarment = (garmentData) => {
+  //   console.log('Form submitted')
+  //   const newCard = {
+  //     _id: cards.length + 1,
+  //     name: garmentData.itemName,
+  //     weatherType: garmentData.weatherType,
+  //     imageUrl: garmentData.imageUrl
+  //   };
+  //   setCards([...cards, newCard]);
+  //   setIsModalOpen(false);
+  // }
+  const handleAddGarment = () => {
+    // console.log('Form submitted')
+    console.log('handleAddGarment called');
+    const newGarment = {
+      _id: Date.now(),
+      name: itemName,
+      weatherType: weatherType,
+      imageUrl: imageUrl
     };
-    setCards([...cards, newCard]);
-    setIsModalOpen(false);
+    console.log('New Garment:', newGarment)
+    setCards([...cards, newGarment]);
+    console.log('Updatedcards:', cards);
+    handleCloseModal();
+    setItemName("");
+    setImageUrl("");
+    setWeatherType("hot");
   }
 
   function handleCardClick(card) {
@@ -197,15 +220,24 @@ function App() {
 
             <ModalWithForm 
               title="New Garment"
+              onSubmit={handleAddGarment}
               name="add-garment"
               onClose={handleCloseModal}
+              buttonText="Add garment"
 
-              isOpen={isModalOpen}>
+              isOpen={isModalOpen}
+              >
                 <AddItemForm 
-                  onSubmit={handleAddGarment}
+                  // onSubmit={handleAddGarment}
                   nameLabel="Name"
                   imageUrlLabel="Image URL"
                   weatherTypeLabel="Select the Weather Type:"
+                  itemName={itemName}
+                  setItemName={setItemName}
+                  imageUrl={imageUrl}
+                  setImageUrl={setImageUrl}
+                  weatherType={weatherType}
+                  setWeatherType={setWeatherType}
                 />
             </ModalWithForm>
 
