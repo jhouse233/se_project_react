@@ -3,10 +3,10 @@ import './ItemModal.css';
 import closeIcon from '../../assets/modal__close.svg';
 
 
-export default function ItemModal({name, imageUrl, onClose, weatherType}) {
+export default function ItemModal({name, imageUrl, onClose, weatherType, isOpen}) {
 
     return (
-        <div className="modal" onClick={onClose}>
+        <div className={`modal ${isOpen ? "modal__opened" : ""}`} onClick={onClose}>
             <div className="modal__container" onClick={(e) => e.stopPropagation()}>
                 <button className="modal__close-container" type="button" onClick={onClose}>
                     <img src={closeIcon} alt="modal-close" className="modal__close-button-image" />

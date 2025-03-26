@@ -12,8 +12,94 @@ import shorts from '../../assets/shorts.svg'
 import sneakers from '../../assets/sneakers.svg'
 import cap from '../../assets/cap.svg'
 
+import addGarment from '../../assets/add_garment_disabled.svg'
 
+const isValidUrl = (url) => {
+  try {
+      new URL(url);
+      return true;
+  } catch (error) {
+      return false;
+  }
+}
 
+function AddItemForm({ onSubmit, nameLabel, imageUrlLabel, weatherTypeLabel }) {
+  const [itemName, setItemName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [weatherType, setWeatherType] = useState("hot");
+
+  const weatherOptions = [
+      { id: "hot", value: "hot", label: "Hot" },
+      { id: "warm", value: "warm", label: "Warm" },
+      { id: "cold", value: "cold", label: "Cold" }
+  ];
+
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      if (isValidUrl(imageUrl)) {
+          const formData = {
+              itemName: itemName,
+              imageUrl: imageUrl,
+              weatherType: weatherType
+          };
+          onSubmit(formData);
+      } else {
+          alert("Please enter a valid URL");
+      }
+  }
+
+  return (
+      <form className="modal__form" onSubmit={handleSubmit}>
+          <label className="modal__label">
+            {nameLabel}
+              <input 
+                  type="text"
+                  className="modal__input" 
+                  placeholder="Name"
+                  required
+                  value={itemName}
+                  onChange={(e) => setItemName(e.target.value)}
+              />
+          </label>
+
+          <label className="modal__label">
+            {imageUrlLabel}
+              <input
+                  type="url"
+                  className="modal__input" 
+                  placeholder="Image URL"
+                  required
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+              />
+          </label>
+
+          <label className="modal__label">
+            {weatherTypeLabel}
+              <div className="modal__radio-container">
+                  {weatherOptions.map((option) => (
+                      <div key={option.id} className="modal__radio-option">
+                          <input
+                              type="radio" 
+                              className="modal__radio" 
+                              id={option.id}
+                              name="weatherType"
+                              value={option.value}
+                              checked={weatherType === option.value}
+                              onChange={(e) => setWeatherType(e.target.value)}
+                          />
+                          <label htmlFor={option.id}>{option.label}</label>
+                      </div>
+                  ))}
+              </div>
+          </label>
+
+          <button className="modal__submit" type="submit">
+              <img src={addGarment} alt="" className="modal__submit-icon" />
+          </button>
+      </form>
+  );
+}
 
 
 function App() {
@@ -71,7 +157,9 @@ function App() {
 
 
   const handleCloseModal = () => {
+    console.log('Close button clicked');
     setIsModalOpen(false);
+    console.log('Modal state after setting to false:', isModalOpen)
   };
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -82,6 +170,7 @@ function App() {
   console.log('Weather Data:', weatherData);
 
   const handleAddGarment = (garmentData) => {
+    console.log('Form submitted')
     const newCard = {
       _id: cards.length + 1,
       name: garmentData.itemName,
@@ -89,6 +178,7 @@ function App() {
       imageUrl: garmentData.imageUrl
     };
     setCards([...cards, newCard]);
+    setIsModalOpen(false);
   }
 
   function handleCardClick(card) {
@@ -109,25 +199,30 @@ function App() {
               title="New Garment"
               name="add-garment"
               onClose={handleCloseModal}
-              onSubmit={handleAddGarment}
-              isOpen={isModalOpen}
-              inputName= "Name"
-              inputImageUrl="Image URL"
-            />
+
+              isOpen={isModalOpen}>
+                <AddItemForm 
+                  onSubmit={handleAddGarment}
+                  nameLabel="Name"
+                  imageUrlLabel="Image URL"
+                  weatherTypeLabel="Select the Weather Type:"
+                />
+            </ModalWithForm>
 
           <Main weatherData={weatherData}
                 cards={cards}
                 onCardClick={handleCardClick}  
           />
-          {isItemModalOpen && (
-            <ItemModal 
-                name={selectedCard?.name}
-                imageUrl={selectedCard?.imageUrl}
-                weatherType={selectedCard?.weatherType}
-                temperature={weatherData?.temperature}
-                onClose={() => setIsItemModalOpen(false)}
-            />
-          )}
+          
+          <ItemModal 
+              name={selectedCard?.name}
+              imageUrl={selectedCard?.imageUrl}
+              weatherType={selectedCard?.weatherType}
+              temperature={weatherData?.temperature}
+              onClose={() => setIsItemModalOpen(false)}
+              isOpen={isItemModalOpen}
+          />
+          
           <Footer />
         </div>
       </div>
