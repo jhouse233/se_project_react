@@ -2,14 +2,12 @@ import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext.jsx
 import { Link } from 'react-router-dom';
 import { useContext } from 'react'
 
+import ToggleSwitch from '../ToggleSwitch/ToggleSwitch.jsx'
 import './Header.css';
 
 import logo from '../../assets/logo.svg';
 import avatar from '../../assets/avatar.png'
-import toggleFahrenheit from '../../assets/toggle_state_farh.svg';
-import toggleFahrenheitHover from '../../assets/toggle_state_farh_hover.svg';
-import toggleTransition from '../../assets/toggle_state_transition.svg';
-import toggleCelsius from '../../assets/toggle_state_celcious.svg';
+
 
 
 
@@ -39,7 +37,8 @@ export default function Header({onOpenModal, location}) {
                 <p>{location}</p>
             </div>
             <div className="header-right">
-                <label className="header__toggle-switch">
+                <ToggleSwitch />
+                {/* <label className="header__toggle-switch">
                     <input 
                         type="checkbox" 
                         id="header-switch"
@@ -62,7 +61,7 @@ export default function Header({onOpenModal, location}) {
                         }}
                     ></span>
 
-                </label>
+                </label> */}
                 {/* <button type="button" className="header__add-clothes-button" onClick={onOpenModal}>+ Add Clothes</button> */}
                 <button type="button" className="header__add-clothes-button" onClick={() => {
                     console.log('Button clicked in Header');

@@ -1,0 +1,21 @@
+
+
+.toggle-switch .toggle__option {
+    display: inline-block;
+    width: 56px;
+    height: 28px;
+    background-image: url('../../assets/toggle_state_farh.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.toggle-switch input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle__option:hover {
+    background-image: url('../../assets/toggle_state_farh_hover.svg');
+}
+
+

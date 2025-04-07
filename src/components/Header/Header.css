@@ -124,32 +124,7 @@
     text-decoration: underline;
 }
 
-.header__toggle-switch input[type="checkbox"] {
-    display: none;
-}
 
-.header__toggle-switch .header__toggle {
-    display: inline-block;
-    width: 56px;
-    height: 28px;
-    background-image: url('../../assets/toggle_state_farh.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-}
-
-/* .header__toggle-switch .header__toggle:hover {
-    background-image: url('../../assets/toggle_state_farh_hover.svg');
-} */
-
-.header__toggle-switch input[type="checkbox"]:checked + .header__toggle:hover {
-    background-image: url('../../assets/toggle_state_farh_hover.svg');
-}
-
-
-/* .header__toggle-switch input[type="checkbox"]:not(:checked) + .header__toggle:hover {
-    background-image: url('../../assets/toggle_state_celcious_hover.svg');
-} */
 
 .header__logo {
     height: 40px;
