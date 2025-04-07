@@ -1,0 +1,35 @@
+.profile-page {
+
+    padding: 40px 40px;
+}
+
+.profile-container {
+    display: flex;
+    align-items: start;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* .sidebar {
+    flex: 0 0 auto;
+    background-color: #F5F5F5;
+    padding: 20px;
+    width: 229px;
+    border-radius: 20px;
+} */
+
+/* .user-info {
+    margin-bottom: 24px;
+    color: #666;
+}
+
+.user-info h1 {
+    font-size: 24px;
+    margin: 0 0 8px;
+}
+
+.user-info p {
+    font-size: 16px;
+    margin: 0;
+    color: #666;
+} */

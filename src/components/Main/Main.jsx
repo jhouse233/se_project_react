@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { convertToFahrenheit} from '../WeatherCard/WeatherCard.jsx';
+import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext.jsx';
 
 import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import './Main.css';
@@ -7,14 +8,14 @@ import ItemCard from '../ItemCard/ItemCard.jsx'
 
 
 export default function Main({weatherData, cards, onCardClick}) {
-    // console.log('Weather Data in Main:', weatherData);
+    // console.log('Main component Rendering')
     const [selectedCard, setSelectedCard] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
 
 
     const getWeatherType = (temperature) => {
-        const tempInFahrenheight = convertToFahrenheit(temperature);
+        const tempInFahrenheight = temperature.F;
         if (tempInFahrenheight >= 75) {
             return 'hot';
         } else if (tempInFahrenheight >= 60) {
@@ -24,7 +25,7 @@ export default function Main({weatherData, cards, onCardClick}) {
         }
     }
 
-    const [currentWeatherType, setCurrentWeatherType] = useState(weatherData?.main?.temp ? getWeatherType(weatherData.main.temp) : 'hot');
+    const [currentWeatherType, setCurrentWeatherType] = useState(weatherData?.temperature ? getWeatherType(weatherData.temperature) : 'hot');
 
     const handleEditClick = (card) => {
         setSelectedCard(card);
@@ -32,25 +33,28 @@ export default function Main({weatherData, cards, onCardClick}) {
     };
 
     useEffect(() => {
-        if (weatherData?.main?.temp) {
-            setCurrentWeatherType(getWeatherType(weatherData.main.temp))
+        if (weatherData?.temperature) {
+            setCurrentWeatherType(getWeatherType(weatherData.temperature))
         }
     }, [weatherData]);
 
-    // console.log('Entire weatherData:', weatherData);
-    // console.log('Weather type from API:', weatherData?.weather?.[0]?.main);
+    useEffect(() => {
+        console.log('Main component mounted');
+    }, []);
 
+    const { currentTemperatureUnit } = useTemperature();
+    // console.log('Temperature data:', weatherData?.temperature);
+    
     return (
         
             <main className="main">
                 <div className="main__content">
-                    {/* <WeatherCard weatherData={weatherData} /> */}
                     <div className="weather-container">
                         {weatherData && (
                             <WeatherCard 
                                 day="Today"
                                 type={weatherData?.weather?.[0]?.main}
-                                weatherTemp={weatherData?.main?.temp} 
+                                weatherTemp={weatherData?.temperature} 
                             />
                         )}
                     </div>
@@ -62,7 +66,7 @@ export default function Main({weatherData, cards, onCardClick}) {
                             // console.log('Current Weather type:', JSON.stringify(currentWeatherType))
                             // console.log('Are they equal?:', card.weatherType === currentWeatherType)
 
-                            return card.weatherType === currentWeatherType
+                            return card.weather === currentWeatherType
                         })
                         .map((card) => {
                             return (

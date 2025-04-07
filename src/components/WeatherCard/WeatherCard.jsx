@@ -1,4 +1,7 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
+import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext.jsx';
+import { useContext } from 'react'
+
 import './WeatherCard.css'
 import ModalWithForm from '../ModalWithForm/ModalWithForm.jsx';
 
@@ -21,43 +24,64 @@ const weatherImages = {
         Clear: sunnyDay,
         Clouds: cloudyDay,
         Rain: rainDay,
-        Thunderstorms: stormDay,
+        Thunderstorm: stormDay,
         Snow: snowmDay,
-        Fog: fogDay
+        Fog: fogDay,
+        Mist: fogDay,
+        Drizzle: rainDay,
+        Haze: fogDay
     },
     night: {
         Clear: sunnyNight,
         Clouds: cloudyNight,
         Rain: rainNight,
-        Thunderstorms: stormNight,
+        Thunderstorm: stormNight,
         Snow: snowNight,
-        Fog: fogNight
+        Fog: fogNight,
+        Mist: fogNight,
+        Drizzle: rainNight,
+        Haze: fogNight
     }
 }
-
 export const convertToFahrenheit = (celsius) => {
+    // console.log('RAW API remp data:', temperature);
+
     return Math.round((celsius * 9/5) + 32);
 }
 
 
 const WeatherCard = ({ day, type, weatherTemp }) => {
-    // console.log('Temperature received:', weatherTemp, 'Type:', typeof weatherTemp);
 
+
+    const currentHour = new Date().getHours();
     const [selectedCard, setSelectedCard] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
-    const currentHour = new Date().getHours();
+    const { currentTemperatureUnit } = useTemperature();
 
-    let imageToShow;
-    if (currentHour >= 6 && currentHour < 18) {
-        imageToShow = weatherImages.day[type];
-    } else {
-        imageToShow = weatherImages.night[type];
-    }
+    useEffect(() => {
+    }, [day, type, weatherTemp, currentTemperatureUnit]);
 
-    if (weatherTemp === null) {
+    // Early return for loading state
+    if (!weatherTemp || !type) {
         return (
             <div className="weather-card">
                 <h2>Loading weather data</h2>
+            </div>
+        );
+    }
+
+    // Determine which image to show
+    let imageToShow;
+    try {
+        if (currentHour >= 6 && currentHour < 18) {
+            imageToShow = weatherImages.day[type];
+        } else {
+            imageToShow = weatherImages.night[type];
+        }
+    } catch(error) {
+        return (
+            <div className="weather-card">
+                <h2>Error loading weather card</h2>
             </div>
         );
     }
@@ -67,37 +91,23 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
             name: 'Item Name',
             imageUrl: imageToShow,
             weatherType: type,
-            temperature: convertToFahrenheit(weatherTemp),
+            temperature: weatherTemp?.[currentTemperatureUnit],
         });
         setModalOpen(true);
     };
 
-
-
-    // console.log('Weather tye received:', type);
-    // console.log('Image to Show:', imageToShow)
     return (
-    <>
-         <div className="weather-card" onClick={handleCardClick}>
-            <div className="weather-card_image-section">
-                <div className="weather-card_image-container" onClick={handleCardClick}>
+        
+            <div className="weather-card" onClick={handleCardClick}>
+                <div className="weather-card_image-container" >
                     <img src={imageToShow} alt="weather" className="weather-card_image" />
-                    <div className="weather-card_temp-overlay">{convertToFahrenheit(weatherTemp)}°F</div>
+                    <div className="weather-card_temp-overlay">{weatherTemp?.[currentTemperatureUnit]}°{currentTemperatureUnit}</div>
+                </div>       
+                <div className="weather-card_info-section">
+                    <p className="weather-card_info">{day} is {weatherTemp?.[currentTemperatureUnit]}°{currentTemperatureUnit} / You may want to wear: </p>
                 </div>
-                
             </div>
-            <div className="weather-card_info-section">
-                <p className="weather-card_info">{day} is {convertToFahrenheit(weatherTemp)}°F / You may want to wear: </p>
-                {/* <div className="weather-card_day">{day}</div>
-                <div className="weather-card_type">{type}</div>
-                <div className="weather-card_temp">{convertToFahrenheit(weatherTemp)}°F</div> */}
-            </div>
-        </div>
         
-
-        
-    </>
-    )
+    );
 }
-
 export default WeatherCard;

@@ -1,0 +1,28 @@
+.side-bar {
+    background-color: #f5f5f5;
+    flex: 0 0 auto;
+    
+}
+
+.side-bar__profile {
+    display: flex;
+    align-items: center;
+    width: 229px;
+    height: 56px;
+}
+
+.side-bar__avatar {
+    width: 56px;
+    height: 56px;
+    margin-right: 16px;
+
+    /* margin-left: 40px; */
+    border-radius: 50%;
+}
+
+.side-bar__name {
+    font-family: "CabinetGrotesk", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+}

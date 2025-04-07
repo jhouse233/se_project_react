@@ -1,16 +1,28 @@
 import { useState, useEffect } from 'react';
+import { getWeatherData } from '../../utils/weatherApi.js';
+import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext';
+import { Route, Routes } from 'react-router-dom';
+import { deleteItem, addItem } from '../../utils/api.js';
+
+
 import './App.css';
-import { getWeatherData } from '../../utils/weatherApi.js'
+
 import Header from '../Header/Header.jsx';
 import ModalWithForm from '../ModalWithForm/ModalWithForm.jsx';
 import Main from '../Main/Main.jsx';
 import ItemModal from '../ItemModal/ItemModal.jsx';
 import Footer from '../Footer/Footer.jsx';
+import Profile from '../Profile/Profile.jsx';
+import WeatherCard from '../WeatherCard/WeatherCard';
+import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal.jsx';
+import ClothesSection from '../ClothesSection/ClothesSection.jsx';
+
+
 // Images
-import t_shirt from '../../assets/t-shirt.svg'
-import shorts from '../../assets/shorts.svg'
-import sneakers from '../../assets/sneakers.svg'
-import cap from '../../assets/cap.svg'
+// import t_shirt from '../../assets/t-shirt.svg'
+// import shorts from '../../assets/shorts.svg'
+// import sneakers from '../../assets/sneakers.svg'
+// import cap from '../../assets/cap.svg'
 
 import addGarment from '../../assets/add_garment_disabled.svg'
 
@@ -31,21 +43,6 @@ function AddItemForm({ nameLabel, imageUrlLabel, weatherTypeLabel, itemName, set
       { id: "warm", value: "warm", label: "Warm" },
       { id: "cold", value: "cold", label: "Cold" }
   ];
-
-  // const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     if (isValidUrl(imageUrl)) {
-  //         const formData = {
-  //             itemName: itemName,
-  //             imageUrl: imageUrl,
-  //             weatherType: weatherType
-  //         };
-  //         onSubmit(formData);
-  //     } else {
-  //         alert("Please enter a valid URL");
-  //     }
-  // }
-
 
   return (
       // <form className="modal__form" onSubmit={handleSubmit}>
@@ -92,46 +89,19 @@ function AddItemForm({ nameLabel, imageUrlLabel, weatherTypeLabel, itemName, set
                       </div>
                   ))}
               </div>
+
           </label>
         </>
-        
-
-          // <button className="modal__submit" type="submit">
-              // <img src={addGarment} alt="" className="modal__submit-icon" />
-          // </button>
-      // </form>
   );
 }
 
 
 function App() {
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cards, setCards] = useState([
-    {
-      _id: 1,
-      name: "T-Shirt", 
-      weatherType: "hot",
-      imageUrl: t_shirt
-    },
-    {
-      _id: 2,
-      name: "shorts", 
-      weatherType: "warm",
-      imageUrl: shorts
-    },
-    {
-      _id: 3,
-      name: "sneakers", 
-      weatherType: "cold",
-      imageUrl: sneakers
-    },
-    {
-      _id: 4,
-      name: "cap", 
-      weatherType: "cold",
-      imageUrl: cap
-    },
-  ]);
+  const [cards, setCards] = useState([]);
+
   const [weatherData, setWeatherData] = useState(null);
 
   const [selectedCard, setSelectedCard] = useState(null);
@@ -141,124 +111,242 @@ function App() {
   const [imageUrl, setImageUrl] = useState("");
   const [weatherType, setWeatherType] = useState("hot");
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/items');
+        const data = await response.json();
+        console.log('Fetch daata:', data)
+        setCards(data);
+      } catch (error) {
+        console.error('Error fetching items:', error);
+      }
+    };
+    
+    fetchItems();
+  }, []);
 
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        // console.log('Fetching weather data...')
+
         const data = await getWeatherData('New York');
-        // console.log('Weather data received in App', data)
-        setWeatherData(data)
-        // console.log('Weather Data after setState:', weatherData)
+
+
+        const celsiusTemp = Math.round(data.main.temp);
+        const fahrenheitTemp = Math.round((celsiusTemp * 9/5) + 32)
+
+
+        const weatherDataObj = {
+          ...data,
+          temperature: {
+            F: fahrenheitTemp,
+            C: celsiusTemp
+          }
+        };
+
+        setWeatherData(weatherDataObj);
+ 
+
       } catch(error) {
-          // console.error('Error:', error)
+        console.error('Error in fetch', error);
       }
     };
+    // console.log('About to call fetchWeatherData');
     fetchWeatherData();
+    // console.log('Called fetchWeatherData');
+  
   }, []);
 
   useEffect(() => {
-    // console.log('weatherData updated', weatherData);
   }, [weatherData]);
 
 
   const handleCloseModal = () => {
-    // console.log('Close button clicked');
     setIsModalOpen(false);
-    // console.log('Modal state after setting to false:', isModalOpen)
   };
   const handleOpenModal = () => {
+    console.log('Before state update - isModalOpen', isModalOpen);
     setIsModalOpen(true);
+    console.log('After state update - attempting to set is ModalOpen true');
   }
-  // const handleCardClick = (card) => {
-  //   console.log('Card Clicked:', card)
-  // }
-  // console.log('Weather Data:', weatherData);
 
-  // const handleAddGarment = (garmentData) => {
-  //   console.log('Form submitted')
-  //   const newCard = {
-  //     _id: cards.length + 1,
-  //     name: garmentData.itemName,
-  //     weatherType: garmentData.weatherType,
-  //     imageUrl: garmentData.imageUrl
+  // const handleAddGarment = () => {
+  //   const newGarment = {
+  //     _id: Date.now(),
+  //     name: itemName,
+  //     weatherType: weatherType,
+  //     imageUrl: imageUrl
   //   };
-  //   setCards([...cards, newCard]);
-  //   setIsModalOpen(false);
+  //   setCards([...cards, newGarment]);
+  //   handleCloseModal();
+  //   setItemName("");
+  //   setImageUrl("");
+  //   setWeatherType("hot");
   // }
-  const handleAddGarment = () => {
-    // console.log('Form submitted')
-    console.log('handleAddGarment called');
-    const newGarment = {
-      _id: Date.now(),
-      name: itemName,
-      weatherType: weatherType,
-      imageUrl: imageUrl
-    };
-    console.log('New Garment:', newGarment)
-    setCards([...cards, newGarment]);
-    console.log('Updatedcards:', cards);
-    handleCloseModal();
-    setItemName("");
-    setImageUrl("");
-    setWeatherType("hot");
-  }
+
+  // const handleAddGarment = async () => {
+  //   console.log('Attempting to add garment:', {
+  //     name: itemName,
+  //     weatherType: weatherType,
+  //     imageUrl: imageUrl
+  // });
+  //   try {
+  //     const newGarment = {
+  //       name: itemName,
+  //       weatherType: weatherType,
+  //       imageUrl: imageUrl
+  //     };
+      
+  //     const savedGarment = await addItem(newGarment);
+      
+  //     setCards([...cards, savedGarment]);
+      
+  //     setIsModalOpen(false);
+  //     setItemName('');
+  //     setWeatherType('');
+  //     setImageUrl('');
+  //   } catch (error) {
+  //     console.error('Error adding garment:', error);
+  //   }
+  // };
+
+  const handleAddGarment = async () => {
+    console.log('Attempting to add garment:', {
+        name: itemName,
+        weatherType: weatherType,
+        imageUrl: imageUrl
+    });
+    
+    try {
+        const savedGarment = await addItem({
+            name: itemName,
+            weatherType: weatherType,
+            imageUrl: imageUrl
+        });
+        console.log('Received saved garment:', savedGarment);
+        
+        const flattenedGarment = {
+            ...savedGarment.name,
+            _id: savedGarment._id
+        };
+        
+        setCards([...cards, flattenedGarment]);
+        
+        // Reset form fields
+        setItemName('');
+        setWeatherType('');
+        setImageUrl('');
+        
+        setIsModalOpen(false);
+    } catch (error) {
+        console.error('Error adding garment:', error);
+    }
+};
+
+
+  
 
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsItemModalOpen(true);
-}
+  }
 
-  // const testWeatherAPI = async () => {
-  //   const weatherData = await getWeatherData('New York')
-  //   console.log('Test weather data:', weatherData);
-  
+  // function handleDeleteItem(idToDelete) {
+  //   setCards(cards.filter(card => card._id !== idToDelete))
+  // }
+  async function handleDeleteItem(idToDelete) {
+    try {
+      await deleteItem(idToDelete);
+      setCards(cards.filter(card => card._id !== idToDelete));
+    } catch (error) {
+     console.error('Error deleting item:', error);
+    }
+  }
+
+  function handleDeleteClick() {
+    setIsDeleteModalOpen(true);
+    setIsItemModalOpen(false);
+  }
+
   return (
-      <div className="page">
-        <div className="page__content">
-          <Header onOpenModal={handleOpenModal} location=", New York"/>
-
-            <ModalWithForm 
-              title="New Garment"
-              onSubmit={handleAddGarment}
-              name="add-garment"
-              onClose={handleCloseModal}
-              buttonText="Add garment"
-
-              isOpen={isModalOpen}
-              >
-                <AddItemForm 
-                  // onSubmit={handleAddGarment}
-                  nameLabel="Name"
-                  imageUrlLabel="Image URL"
-                  weatherTypeLabel="Select the Weather Type:"
-                  itemName={itemName}
-                  setItemName={setItemName}
-                  imageUrl={imageUrl}
-                  setImageUrl={setImageUrl}
-                  weatherType={weatherType}
-                  setWeatherType={setWeatherType}
-                />
-            </ModalWithForm>
-
-          <Main weatherData={weatherData}
-                cards={cards}
-                onCardClick={handleCardClick}  
+    <div className="page">
+      <div className="page__content">
+        <Header
+          onOpenModal={handleOpenModal}
+          location=", New York"
+        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              weatherData ? (
+                <>
+                  {/* <WeatherCard
+                    day={new Date().toLocaleDateString('en-US', { weekday: 'long' })}
+                    type={weatherData?.weather?.[0]?.main || 'Clear'}
+                    weatherTemp={weatherData?.temperature}
+                  /> */}
+                  <Main
+                    weatherData={weatherData}
+                    cards={cards}
+                    onCardClick={handleCardClick}
+                    onDeleteItem={handleDeleteClick}
+                  />
+                </>
+              ) : (
+                <div>Loading weather data...</div>
+              )
+            }
           />
-          
-          <ItemModal 
-              name={selectedCard?.name}
-              imageUrl={selectedCard?.imageUrl}
-              weatherType={selectedCard?.weatherType}
-              temperature={weatherData?.temperature}
-              onClose={() => setIsItemModalOpen(false)}
-              isOpen={isItemModalOpen}
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+
+        <ModalWithForm
+          title="New Garment"
+          onSubmit={handleAddGarment}
+          name="add-garment"
+          onClose={handleCloseModal}
+          buttonText="Add garment"
+          isOpen={isModalOpen}
+        >
+          <AddItemForm
+            nameLabel="Name"
+            imageUrlLabel="Image URL"
+            weatherTypeLabel="Select the Weather Type:"
+            itemName={itemName}
+            setItemName={setItemName}
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            weatherType={weatherType}
+            setWeatherType={setWeatherType}
           />
-          
-          <Footer />
-        </div>
+        </ModalWithForm>
+
+        <ItemModal
+          name={selectedCard?.name}
+          imageUrl={selectedCard?.imageUrl}
+          weatherType={selectedCard?.weatherType}
+          temperature={weatherData?.temperature}
+          onClose={() => setIsItemModalOpen(false)}
+          isOpen={isItemModalOpen}
+          onDelete={handleDeleteClick}
+        />
+        <DeleteConfirmModal 
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={() => {
+            handleDeleteItem(selectedCard?._id);
+            setIsDeleteModalOpen(false)
+          }}
+        />
+
+        <Footer />
       </div>
-  )
+    </div>
+  );
 }
 
 export default App;

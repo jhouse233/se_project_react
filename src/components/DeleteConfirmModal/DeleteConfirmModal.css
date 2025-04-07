@@ -1,0 +1,91 @@
+.delete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete__content {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 28px;
+    border-radius: 20px;
+    width: 400px;
+    position: relative;
+    text-align: center;
+}
+
+.delete__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.delete__button {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete__button_cancel {
+    background-color: transparent;
+    border: none;
+    color: black;
+}
+
+.delete__button_confirm {
+    background-color: transparent;
+    color: rgba(255, 77, 0, 1);
+}
+
+.delete__message {
+    color: rgba(0, 0, 0, 1);
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 12px;
+}
+
+.delete__button_cancel:hover {
+    text-decoration: underline;
+}
+
+.delete__button_cancel:focus {
+    outline: none;
+}
+
+.delete__button_confirm:hover {
+    text-decoration: underline;
+}
+
+.delete__button_confirm:focus {
+    outline: none;
+}
+
+.delete__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.delete__close:hover {
+    opacity: 0.6;
+}
+
+
+.delete_opened {
+    display: flex;
+}

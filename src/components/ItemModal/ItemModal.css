@@ -62,5 +62,27 @@
     color: black;
 }
 
+.modal__delete-button {
+    position: absolute;
+    bottom: 68px;
+    right: 32px;
+
+    color: rgba(255, 77, 0, 1);
+    background-color: transparent;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    border: none;
+}
+
+.modal__delete-button:focus {
+    outline: none;
+}
+
+.modal__delete-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 
 

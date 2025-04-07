@@ -43,3 +43,26 @@
     object-fit: cover;
     object-position: center;
 }
+
+
+.card__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    color: white;
+}
+
+.card__name{
+    margin: 0 0 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.card__weather {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
