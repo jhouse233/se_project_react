@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getWeatherData } from '../../utils/weatherApi.js';
-import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext';
 import { Route, Routes } from 'react-router-dom';
 import { deleteItem, addItem } from '../../utils/api.js';
-
 
 
 
@@ -15,7 +13,7 @@ import Main from '../Main/Main.jsx';
 import ItemModal from '../ItemModal/ItemModal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import Profile from '../Profile/Profile.jsx';
-import WeatherCard from '../WeatherCard/WeatherCard';
+import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal.jsx';
 import ClothesSection from '../ClothesSection/ClothesSection.jsx';
 
@@ -103,6 +101,8 @@ function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cards, setCards] = useState([]);
+
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
   const [weatherData, setWeatherData] = useState(null);
 
