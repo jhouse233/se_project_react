@@ -3,6 +3,7 @@ import { getWeatherData } from '../../utils/weatherApi.js';
 import { Route, Routes } from 'react-router-dom';
 import { deleteItem, addItem } from '../../utils/api.js';
 
+import { TemperatureProvider } from '../../contexts/CurrentTemperatureUnitContext.jsx';
 
 
 import './App.css';
@@ -13,7 +14,7 @@ import Main from '../Main/Main.jsx';
 import ItemModal from '../ItemModal/ItemModal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import Profile from '../Profile/Profile.jsx';
-// import WeatherCard from '../WeatherCard/WeatherCard.jsx';
+import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal.jsx';
 import ClothesSection from '../ClothesSection/ClothesSection.jsx';
 
@@ -170,19 +171,19 @@ function App() {
     setIsModalOpen(false);
   };
   const handleOpenModal = () => {
-    console.log('Before state update - isModalOpen', isModalOpen);
+    // console.log('Before state update - isModalOpen', isModalOpen);
     setIsModalOpen(true);
-    console.log('After state update - attempting to set is ModalOpen true');
+    // console.log('After state update - attempting to set is ModalOpen true');
   }
 
 
 
   const handleAddGarment = async () => {
-    console.log('Attempting to add garment:', {
-        name: itemName,
-        weatherType: weatherType,
-        imageUrl: imageUrl
-    });
+    // console.log('Attempting to add garment:', {
+    //     name: itemName,
+    //     weatherType: weatherType,
+    //     imageUrl: imageUrl
+    // });
     
     try {
         const savedGarment = await addItem({
@@ -190,7 +191,7 @@ function App() {
             weatherType: weatherType,
             imageUrl: imageUrl
         });
-        console.log('Received saved garment:', savedGarment);
+        // console.log('Received saved garment:', savedGarment);
         
         const flattenedGarment = {
             ...savedGarment.name,
@@ -236,76 +237,78 @@ function App() {
   }
 
   return (
-    <div className="page">
-      <div className="page__content">
-        <Header
-          onOpenModal={handleOpenModal}
-          location=", New York"
-        />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              weatherData ? (
-                <>
-
-                  <Main
-                    weatherData={weatherData}
-                    cards={cards}
-                    onCardClick={handleCardClick}
-                    onDeleteItem={handleDeleteClick}
-                  />
-                </>
-              ) : (
-                <div>Loading weather data...</div>
-              )
-            }
+    <TemperatureProvider>
+      <div className="page">
+        <div className="page__content">
+          <Header
+            onOpenModal={handleOpenModal}
+            location=", New York"
           />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                weatherData ? (
+                  <>
 
-        <ModalWithForm
-          title="New Garment"
-          onSubmit={handleAddGarment}
-          name="add-garment"
-          onClose={handleCloseModal}
-          buttonText="Add garment"
-          isOpen={isModalOpen}
-        >
-          <AddItemForm
-            nameLabel="Name"
-            imageUrlLabel="Image URL"
-            weatherTypeLabel="Select the Weather Type:"
-            itemName={itemName}
-            setItemName={setItemName}
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-            weatherType={weatherType}
-            setWeatherType={setWeatherType}
+                    <Main
+                      weatherData={weatherData}
+                      cards={cards}
+                      onCardClick={handleCardClick}
+                      onDeleteItem={handleDeleteClick}
+                    />
+                  </>
+                ) : (
+                  <div>Loading weather data...</div>
+                )
+              }
+            />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+
+          <ModalWithForm
+            title="New Garment"
+            onSubmit={handleAddGarment}
+            name="add-garment"
+            onClose={handleCloseModal}
+            buttonText="Add garment"
+            isOpen={isModalOpen}
+          >
+            <AddItemForm
+              nameLabel="Name"
+              imageUrlLabel="Image URL"
+              weatherTypeLabel="Select the Weather Type:"
+              itemName={itemName}
+              setItemName={setItemName}
+              imageUrl={imageUrl}
+              setImageUrl={setImageUrl}
+              weatherType={weatherType}
+              setWeatherType={setWeatherType}
+            />
+          </ModalWithForm>
+
+          <ItemModal
+            name={selectedCard?.name}
+            imageUrl={selectedCard?.imageUrl}
+            weatherType={selectedCard?.weatherType}
+            temperature={weatherData?.temperature}
+            onClose={() => setIsItemModalOpen(false)}
+            isOpen={isItemModalOpen}
+            onDelete={handleDeleteClick}
           />
-        </ModalWithForm>
+          <DeleteConfirmModal 
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onConfirm={() => {
+              handleDeleteItem(selectedCard?._id);
+              setIsDeleteModalOpen(false)
+            }}
+          />
 
-        <ItemModal
-          name={selectedCard?.name}
-          imageUrl={selectedCard?.imageUrl}
-          weatherType={selectedCard?.weatherType}
-          temperature={weatherData?.temperature}
-          onClose={() => setIsItemModalOpen(false)}
-          isOpen={isItemModalOpen}
-          onDelete={handleDeleteClick}
-        />
-        <DeleteConfirmModal 
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          onConfirm={() => {
-            handleDeleteItem(selectedCard?._id);
-            setIsDeleteModalOpen(false)
-          }}
-        />
-
-        <Footer />
+          <Footer />
+        </div>
       </div>
-    </div>
+    </TemperatureProvider>
   );
 }
 
