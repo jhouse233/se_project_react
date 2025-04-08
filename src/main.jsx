@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <TemperatureProvider> */}
-        <App />
+      <App />
       {/* </TemperatureProvider> */}
     </BrowserRouter>
   </React.StrictMode>
