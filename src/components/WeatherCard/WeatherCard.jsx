@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'; 
 import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext.jsx';
-import { useContext } from 'react'
+// import { useContext } from 'react'
 
 import './WeatherCard.css'
-import ModalWithForm from '../ModalWithForm/ModalWithForm.jsx';
+// import ModalWithForm from '../ModalWithForm/ModalWithForm.jsx';
 
 
 import sunnyDay from '../../assets/sunny_day.svg'

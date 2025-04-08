@@ -5,6 +5,8 @@ import { Route, Routes } from 'react-router-dom';
 import { deleteItem, addItem } from '../../utils/api.js';
 
 
+
+
 import './App.css';
 
 import Header from '../Header/Header.jsx';
@@ -173,45 +175,7 @@ function App() {
     console.log('After state update - attempting to set is ModalOpen true');
   }
 
-  // const handleAddGarment = () => {
-  //   const newGarment = {
-  //     _id: Date.now(),
-  //     name: itemName,
-  //     weatherType: weatherType,
-  //     imageUrl: imageUrl
-  //   };
-  //   setCards([...cards, newGarment]);
-  //   handleCloseModal();
-  //   setItemName("");
-  //   setImageUrl("");
-  //   setWeatherType("hot");
-  // }
 
-  // const handleAddGarment = async () => {
-  //   console.log('Attempting to add garment:', {
-  //     name: itemName,
-  //     weatherType: weatherType,
-  //     imageUrl: imageUrl
-  // });
-  //   try {
-  //     const newGarment = {
-  //       name: itemName,
-  //       weatherType: weatherType,
-  //       imageUrl: imageUrl
-  //     };
-      
-  //     const savedGarment = await addItem(newGarment);
-      
-  //     setCards([...cards, savedGarment]);
-      
-  //     setIsModalOpen(false);
-  //     setItemName('');
-  //     setWeatherType('');
-  //     setImageUrl('');
-  //   } catch (error) {
-  //     console.error('Error adding garment:', error);
-  //   }
-  // };
 
   const handleAddGarment = async () => {
     console.log('Attempting to add garment:', {
@@ -284,11 +248,11 @@ function App() {
             element={
               weatherData ? (
                 <>
-                  {/* <WeatherCard
+                  <WeatherCard
                     day={new Date().toLocaleDateString('en-US', { weekday: 'long' })}
                     type={weatherData?.weather?.[0]?.main || 'Clear'}
                     weatherTemp={weatherData?.temperature}
-                  /> */}
+                  />
                   <Main
                     weatherData={weatherData}
                     cards={cards}
