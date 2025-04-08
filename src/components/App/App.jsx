@@ -13,7 +13,7 @@ import Main from '../Main/Main.jsx';
 import ItemModal from '../ItemModal/ItemModal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import Profile from '../Profile/Profile.jsx';
-import WeatherCard from '../WeatherCard/WeatherCard.jsx';
+// import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal.jsx';
 import ClothesSection from '../ClothesSection/ClothesSection.jsx';
 
