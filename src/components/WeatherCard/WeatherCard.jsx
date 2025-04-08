@@ -52,12 +52,12 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
 
 
     const currentHour = new Date().getHours();
-    const [selectedCard, setSelectedCard] = useState(null);
-    const [isModalOpen, setModalOpen] = useState(false);
+    // const [selectedCard, setSelectedCard] = useState(null);
+    // const [isModalOpen, setModalOpen] = useState(false);
     const { currentTemperatureUnit } = useTemperature();
 
-    useEffect(() => {
-    }, [day, type, weatherTemp, currentTemperatureUnit]);
+    // useEffect(() => {
+    // }, [day, type, weatherTemp, currentTemperatureUnit]);
 
     // Early return for loading state
     if (!weatherTemp || !type) {
