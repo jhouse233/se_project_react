@@ -3,7 +3,7 @@ import { getWeatherData } from '../../utils/weatherApi.js';
 import { Route, Routes } from 'react-router-dom';
 import { deleteItem, addItem } from '../../utils/api.js';
 
-import { TemperatureProvider } from '../../contexts/CurrentTemperatureUnitContext.jsx';
+import { CurrentTemperatureUnitContext } from '../../contexts/CurrentTemperatureUnitContext.jsx';
 
 
 import './App.css';
@@ -103,7 +103,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cards, setCards] = useState([]);
 
-  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  // const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
   const [weatherData, setWeatherData] = useState(null);
 
@@ -209,10 +209,8 @@ function App() {
     } catch (error) {
         console.error('Error adding garment:', error);
     }
-};
+  };
 
-
-  
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -237,7 +235,7 @@ function App() {
   }
 
   return (
-    <TemperatureProvider>
+    <CurrentTemperatureUnitContext>
       <div className="page">
         <div className="page__content">
           <Header
@@ -308,7 +306,7 @@ function App() {
           <Footer />
         </div>
       </div>
-    </TemperatureProvider>
+    </CurrentTemperatureUnitContext>
   );
 }
 

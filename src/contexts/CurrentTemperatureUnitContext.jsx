@@ -5,13 +5,13 @@ export const TemperatureContext = createContext({
     handleToggleSwitchChange: () => {}
 });
 
-export function TemperatureProvider({ children }) {
+export function CurrentTemperatureUnitContext({ children }) {
     const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
     const handleToggleSwitchChange = () => {
-        console.log('Current unit before toggle:', currentTemperatureUnit);
+        // console.log('Current unit before toggle:', currentTemperatureUnit);
         setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
-        console.log('Switching to:', currentTemperatureUnit === "F" ? "C" : "F");
+        // console.log('Switching to:', currentTemperatureUnit === "F" ? "C" : "F");
     };
 
     return (

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { convertToFahrenheit} from '../WeatherCard/WeatherCard.jsx';
+
 import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext.jsx';
 
-import WeatherCard from '../WeatherCard/WeatherCard.jsx';
+import WeatherCard from '../WeatherCard/WeatherCard.jsx'
 import './Main.css';
 import ItemCard from '../ItemCard/ItemCard.jsx'
 
