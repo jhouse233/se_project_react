@@ -248,11 +248,11 @@ function App() {
             element={
               weatherData ? (
                 <>
-                  <WeatherCard
+                  {/* <WeatherCard
                     day={new Date().toLocaleDateString('en-US', { weekday: 'long' })}
                     type={weatherData?.weather?.[0]?.main || 'Clear'}
                     weatherTemp={weatherData?.temperature}
-                  />
+                  /> */}
                   <Main
                     weatherData={weatherData}
                     cards={cards}

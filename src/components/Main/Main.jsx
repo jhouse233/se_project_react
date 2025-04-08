@@ -49,7 +49,7 @@ export default function Main({weatherData, cards, onCardClick}) {
         
             <main className="main">
                 <div className="main__content">
-                    {/* <div className="weather-container">
+                    <div className="weather-container">
                         {weatherData && (
                             <WeatherCard 
                                 day="Today"
@@ -57,7 +57,7 @@ export default function Main({weatherData, cards, onCardClick}) {
                                 weatherTemp={weatherData?.temperature} 
                             />
                         )}
-                    </div> */}
+                    </div>
 
                     <ul className="cards__grid">
                         {cards
