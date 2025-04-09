@@ -235,7 +235,6 @@ function App() {
   }
 
   return (
-    <CurrentTemperatureUnitContext>
       <div className="page">
         <div className="page__content">
           <Header
@@ -306,7 +305,6 @@ function App() {
           <Footer />
         </div>
       </div>
-    </CurrentTemperatureUnitContext>
   );
 }
 
