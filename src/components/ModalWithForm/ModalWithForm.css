@@ -120,6 +120,13 @@
     margin-top: 8px;
 }
 
+.modal__radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
 .modal__radio-option {
     display: flex;
     align-items: center;
@@ -152,6 +159,8 @@
     background-color: black;
     border-radius: 50%;
 }
+
+
 
 .modal__radio-option label {
     font-family: "Cabinet Grotesk", sans-serif;

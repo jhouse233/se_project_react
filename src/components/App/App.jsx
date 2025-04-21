@@ -121,7 +121,7 @@ function App() {
       try {
         const response = await fetch('http://localhost:3001/items');
         const data = await response.json();
-        console.log('Fetch daata:', data)
+        console.log('Fetch data:', data)
         setCards(data);
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -186,19 +186,25 @@ function App() {
     // });
     
     try {
-        const savedGarment = await addItem({
-            name: itemName,
-            weatherType: weatherType,
-            imageUrl: imageUrl
-        });
+        // const savedGarment = await addItem({
+        //     _id: Date.now(),
+        //     name: itemName,
+        //     weather: weatherType,
+        //     imageUrl: imageUrl
+
+
+        // });
+        const savedGarment = await addItem(itemName, imageUrl, weatherType)
+        
         // console.log('Received saved garment:', savedGarment);
+
+
+        // const flattenedGarment = {
+        //     ...savedGarment.name,
+        //     _id: savedGarment._id
+        // };
         
-        const flattenedGarment = {
-            ...savedGarment.name,
-            _id: savedGarment._id
-        };
-        
-        setCards([...cards, flattenedGarment]);
+        setCards([...cards, savedGarment]);
         
         // Reset form fields
         setItemName('');
@@ -288,7 +294,7 @@ function App() {
           <ItemModal
             name={selectedCard?.name}
             imageUrl={selectedCard?.imageUrl}
-            weatherType={selectedCard?.weatherType}
+            weatherType={selectedCard?.weather}
             temperature={weatherData?.temperature}
             onClose={() => setIsItemModalOpen(false)}
             isOpen={isItemModalOpen}

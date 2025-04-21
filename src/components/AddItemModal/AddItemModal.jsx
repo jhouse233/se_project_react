@@ -85,7 +85,7 @@ function AddItemModal({ isOpen, onClose, onSubmit }) {
                     required
                 />
             </label>
-            <label className='modal__label'>
+            {/* <label className='modal__label'>
                 Weather
                 <select
                     className="modal__input"
@@ -99,7 +99,53 @@ function AddItemModal({ isOpen, onClose, onSubmit }) {
                     <option value="warm">Warm</option>
                     <option value="cold">Cold</option>
                 </select>
-                </label>
+            </label> */}
+            <label className='modal__label'>
+                Weather
+                <div className="modal__radio-group">
+                    <div className="modal__radio-option">
+                        <input
+                            className='modal__radio'
+                            type="radio"
+                            id="hot"
+                            name="weather"
+                            value="hot"
+                            checked={formData.weather === "hot"}
+                            onChange={handleChange}
+                            required
+                        />
+                        <label htmlFor="hot">Hot</label>
+                    </div>
+
+                    <div className="modal__radio-option">
+                        <input
+                            className='modal__radio'
+                            type="radio"
+                            id="warm"
+                            name="weather"
+                            value="warm"
+                            checked={formData.weather === "warm"}
+                            onChange={handleChange}
+                            required
+                        />
+                        <label htmlFor="warm">Warm</label>
+                    </div>
+
+                    <div className="modal__radio-option">
+                        <input
+                            className='modal__radio'
+                            type="radio"
+                            id="cold"
+                            name="weather"
+                            value="cold"
+                            checked={formData.weather === "cold"}
+                            onChange={handleChange}
+                            required
+                        />
+                        <label htmlFor="cold">Cold</label>
+                    </div>
+                </div>
+            </label>
             
 
         </ModalWithForm>
