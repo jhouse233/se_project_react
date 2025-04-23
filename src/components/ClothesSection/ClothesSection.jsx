@@ -1,10 +1,12 @@
 import React from 'react';
-import { useState } from 'react'
-import { deleteItem, addItem } from '../../utils/api';
+import { useState, useEffect } from 'react'
+import { deleteItem, addItem, getItems } from '../../utils/api';
 
 import AddItemModal from '../AddItemModal/AddItemModal';
 import ItemModal from '../ItemModal/ItemModal';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
+
+
 
 import './ClothesSection.css'
 
@@ -37,6 +39,29 @@ function ClothesSection() {
         setSelectedItem(item);
     }
 
+    const isValidItem = (item) => {
+        return item 
+            && typeof item.name === 'string'
+            && typeof item.imageUrl === 'string'
+            && typeof item.weather === 'string';
+       };
+
+    useEffect(() => {
+        const fetchItems = async () => {
+            try {
+                const items = await getItems();
+                console.log('Fetched items:', items)
+                const validItems = items.filter(isValidItem);
+                setClothingItems(validItems);
+            } catch(error) {
+                console.error('Error fetching items', error)
+            }
+        };
+        fetchItems();
+    }, [])
+
+
+
     // const handleDeleteItem = (itemToDelete) => {
     //     const updatedClothingItems = clothingItems.filter((item) => item !== itemToDelete);
     //     setClothingItems(updatedClothingItems);
@@ -44,9 +69,6 @@ function ClothesSection() {
     //     setDeleteSelectedItem("");
     // }
     const handleDeleteItem = async (itemToDelete) => {
-        console.log('Attempting to delete item', itemToDelete);
-        console.log('Item ID:', itemToDelete?._id);
-        console.log('Item full structure:', JSON.stringify(itemToDelete, null, 2));
         try {
             await deleteItem(itemToDelete._id); 
             const updatedClothingItems = clothingItems.filter((item) => item !== itemToDelete);
@@ -59,8 +81,6 @@ function ClothesSection() {
     };
 
     const handleDeleteClick = (item) => {
-        console.log('Delete clicked, item data', item);
-        console.log('Item structure:', JSON.stringify(item, null, 2))
         setDeleteSelectedItem(item);
     }
 
@@ -79,7 +99,6 @@ function ClothesSection() {
                         <div className="card__name">{item.name}</div>
                     </div>
                 ))}
-                
             </div>
             <AddItemModal 
                 isOpen={addNewItem}
@@ -87,18 +106,18 @@ function ClothesSection() {
                 onSubmit={handleSubmit}
             />
             <ItemModal 
-                isOpen={selectedItem !== null}
+                isOpen={!!selectedItem}
                 name={selectedItem?.name}
                 imageUrl={selectedItem?.imageUrl}
-                weatherType={selectedItem?.weatherType}
+                weatherType={selectedItem?.weather}
                 onClose={() => setSelectedItem(null)}
+                // onConfirm={() => handleDeleteItem(deleteSelectedItem)}
                 onDelete={() => handleDeleteClick(selectedItem)}
             />
             <DeleteConfirmModal 
-                isOpen={Boolean(deleteSelectedItem)}
+                isOpen={!!deleteSelectedItem}
                 onClose={() => setDeleteSelectedItem(null)}
                 onConfirm={() => handleDeleteItem(deleteSelectedItem)}
-                name={deleteSelectedItem?.name}
             />
         </section>
     )
