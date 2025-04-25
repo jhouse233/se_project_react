@@ -3,7 +3,7 @@ import closeButton from '../../assets/modal__close.svg';
 
 import addGarment from '../../assets/add_garment_disabled.svg';
 
-function ModalWithForm({ children, title, name, onClose, isOpen, onSubmit }) {
+function ModalWithForm({ children, title, name, onClose, isOpen, onSubmit, buttonText }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(e);
@@ -20,7 +20,8 @@ function ModalWithForm({ children, title, name, onClose, isOpen, onSubmit }) {
                 <form className="modal__form" onSubmit={handleSubmit}>
                     {children}
                     <button className="modal__submit" type="submit">
-                        <img src={addGarment} alt="" className="modal__submit-icon" />
+                        {/* <img src={addGarment} alt="" className="modal__submit-icon" /> */}
+                        {buttonText}
                     </button>
                 </form>
             </div>

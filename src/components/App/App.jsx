@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getWeatherData } from '../../utils/weatherApi.js';
 import { Route, Routes } from 'react-router-dom';
-import { deleteItem, addItem } from '../../utils/api.js';
+import { deleteItem, addItem, getItems } from '../../utils/api.js';
 
 import { CurrentTemperatureUnitContext } from '../../contexts/CurrentTemperatureUnitContext.jsx';
 
@@ -100,7 +100,7 @@ const isValidUrl = (url) => {
 
 function App() {
 
-
+  const [isAddNewItemOpen, setIsAddNewItemOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cards, setCards] = useState([]);
 
@@ -111,17 +111,18 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
 
-  const [itemName, setItemName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weatherType, setWeatherType] = useState("hot");
+  // const [itemName, setItemName] = useState("");
+  // const [imageUrl, setImageUrl] = useState("");
+  // const [weatherType, setWeatherType] = useState("hot");
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:3001/items');
-        const data = await response.json();
+        // const response = await fetch('http://localhost:3001/items');
+        
+        const data = await getItems();
         console.log('Fetch data:', data)
         setCards(data);
       } catch (error) {
@@ -178,8 +179,10 @@ function App() {
           formData.imageUrl,
           formData.weather
         );
-        setCards([...cards,savedGarment]);
+        // setCards([...cards,savedGarment]);
+        setCards([savedGarment, ...cards]);
         handleCloseModal()
+        setIsAddNewItemOpen(false);
 
     } catch (error) {
         console.error('Error adding garment:', error);
@@ -234,7 +237,15 @@ function App() {
                 )
               }
             />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile 
+              cards={cards}
+              onCardClick={handleCardClick}
+              onDeleteItem={handleDeleteClick}
+              isAddNewItemOpen={isAddNewItemOpen}
+              setIsAddNewItemOpen={setIsAddNewItemOpen}
+              handleAddNewItemSubmit={handleAddGarment}
+            />
+            } />
           </Routes>
 
           {/* <ModalWithForm

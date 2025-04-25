@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 // import { useForm } from '../hooks/useForm.js';
 
-function AddItemModal({ isOpen, onClose, onSubmit }) {
+function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
 
     // const [newItemName, setNewItemName] = useState("");
     // const[newItemUrl, setNewItemUrl] = useState("");
@@ -67,6 +67,7 @@ function AddItemModal({ isOpen, onClose, onSubmit }) {
             onClose={handleModalClose}
             isOpen={isOpen}
             onSubmit={handleSubmit}
+            buttonText="Add Garment"
         >
             <label className="modal__label">
                 Name 
