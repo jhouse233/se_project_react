@@ -47,13 +47,15 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
         });
     }, [isOpen]);
         const handleSubmit = (e) => {
+            // e.preventDefault();
+            // onSubmit(formData);
+            // setFormData({
+            //     name: '',
+            //     imageUrl: '',
+            //     weather: ''
+            // });
             e.preventDefault();
             onSubmit(formData);
-            setFormData({
-                name: '',
-                imageUrl: '',
-                weather: ''
-            });
         };
 
     const handleModalClose = () => {
