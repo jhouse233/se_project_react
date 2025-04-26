@@ -18,13 +18,6 @@ import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal.jsx';
 import ClothesSection from '../ClothesSection/ClothesSection.jsx';
 
-
-// Images
-// import t_shirt from '../../assets/t-shirt.svg'
-// import shorts from '../../assets/shorts.svg'
-// import sneakers from '../../assets/sneakers.svg'
-// import cap from '../../assets/cap.svg'
-
 import addGarment from '../../assets/add_garment_disabled.svg'
 import AddItemModal from '../AddItemModal/AddItemModal.jsx';
 
@@ -37,90 +30,24 @@ const isValidUrl = (url) => {
   }
 }
 
-// function AddItemForm({ nameLabel, imageUrlLabel, weatherTypeLabel, itemName, setItemName, imageUrl, setImageUrl, weatherType, setWeatherType }) {
-
-
-//   const weatherOptions = [
-//       { id: "hot", value: "hot", label: "Hot" },
-//       { id: "warm", value: "warm", label: "Warm" },
-//       { id: "cold", value: "cold", label: "Cold" }
-//   ];
-
-//   return (
-//       // <form className="modal__form" onSubmit={handleSubmit}>
-//         <>
-//           <label className="modal__label">
-//             {nameLabel}
-//               <input 
-//                   type="text"
-//                   className="modal__input" 
-//                   placeholder="Name"
-//                   required
-//                   value={itemName}
-//                   onChange={(e) => setItemName(e.target.value)}
-//               />
-//           </label>
-
-//           <label className="modal__label">
-//             {imageUrlLabel}
-//               <input
-//                   type="url"
-//                   className="modal__input" 
-//                   placeholder="Image URL"
-//                   required
-//                   value={imageUrl}
-//                   onChange={(e) => setImageUrl(e.target.value)}
-//               />
-//           </label>
-
-//           <label className="modal__label">
-//             {weatherTypeLabel}
-//               <div className="modal__radio-container">
-//                   {weatherOptions.map((option) => (
-//                       <div key={option.id} className="modal__radio-option">
-//                           <input
-//                               type="radio" 
-//                               className="modal__radio" 
-//                               id={option.id}
-//                               name="weatherType"
-//                               value={option.value}
-//                               checked={weatherType === option.value}
-//                               onChange={(e) => setWeatherType(e.target.value)}
-//                           />
-//                           <label htmlFor={option.id}>{option.label}</label>
-//                       </div>
-//                   ))}
-//               </div>
-
-//           </label>
-//         </>
-//   );
-// }
-
-
 function App() {
 
   const [isAddNewItemOpen, setIsAddNewItemOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cards, setCards] = useState([]);
 
-  // const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
   const [weatherData, setWeatherData] = useState(null);
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
 
-  // const [itemName, setItemName] = useState("");
-  // const [imageUrl, setImageUrl] = useState("");
-  // const [weatherType, setWeatherType] = useState("hot");
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        // const response = await fetch('http://localhost:3001/items');
         
         const data = await getItems();
         console.log('Fetch data:', data)
@@ -159,14 +86,12 @@ function App() {
         console.error('Error in fetch', error);
       }
     };
-    // console.log('About to call fetchWeatherData');
-    fetchWeatherData();
-    // console.log('Called fetchWeatherData');
-  
+    fetchWeatherData();  
   }, []);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsAddNewItemOpen(false);
   };
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -179,10 +104,8 @@ function App() {
           formData.imageUrl,
           formData.weather
         );
-        // setCards([...cards,savedGarment]);
         setCards([savedGarment, ...cards]);
-        handleCloseModal()
-        setIsAddNewItemOpen(false);
+        handleCloseModal();
 
     } catch (error) {
         console.error('Error adding garment:', error);
@@ -208,6 +131,10 @@ function App() {
   function handleDeleteClick() {
     setIsDeleteModalOpen(true);
     setIsItemModalOpen(false);
+  }
+
+  const handleAddNewItemClick = () => {
+    setIsAddNewItemOpen(true);
   }
 
   return (
@@ -241,33 +168,11 @@ function App() {
               cards={cards}
               onCardClick={handleCardClick}
               onDeleteItem={handleDeleteClick}
-              isAddNewItemOpen={isAddNewItemOpen}
-              setIsAddNewItemOpen={setIsAddNewItemOpen}
-              handleAddNewItemSubmit={handleAddGarment}
+              handleAddNewItemClick={handleAddNewItemClick}
             />
             } />
           </Routes>
 
-          {/* <ModalWithForm
-            title="New Garment"
-            onSubmit={handleAddGarment}
-            name="add-garment"
-            onClose={handleCloseModal}
-            buttonText="Add garment"
-            isOpen={isModalOpen}
-            >
-            <AddItemForm
-              nameLabel="Name"
-              imageUrlLabel="Image URL"
-              weatherTypeLabel="Select the Weather Type:"
-              itemName={itemName}
-              setItemName={setItemName}
-              imageUrl={imageUrl}
-              setImageUrl={setImageUrl}
-              weatherType={weatherType}
-              setWeatherType={setWeatherType}
-            />
-          </ModalWithForm> */}
           <AddItemModal
             isOpen={isModalOpen}
             onClose={handleCloseModal}

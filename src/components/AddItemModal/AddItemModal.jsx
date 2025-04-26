@@ -5,17 +5,11 @@ import ModalWithForm from '../ModalWithForm/ModalWithForm';
 
 function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
 
-    // const [newItemName, setNewItemName] = useState("");
-    // const[newItemUrl, setNewItemUrl] = useState("");
     const [formData, setFormData] = useState({
         name: '',
         imageUrl: '',
         weather: ''    
     })
-
-    // const {values, handleChange, setValues} = useForm({});
-
-    // const [newItemWeather, setNewItemWeather] = useState("");
 
     const handleChange = (e) => {
         setFormData({
@@ -24,21 +18,6 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
         });
     };
 
-    // const handleNameChange = (e) => {
-    //     setNewItemName(e.target.value);
-    // };
-
-    // const handleUrlChange = (e) => {
-    //     setNewItemUrl(e.target.value);
-    // };
-
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     onSubmit({ name: newItemName, url: newItemUrl});
-    //     setNewItemName("");
-    //     setNewItemUrl("");
-    // }
     useEffect(() => {
         setFormData({
             name:'',
@@ -47,13 +26,6 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
         });
     }, [isOpen]);
         const handleSubmit = (e) => {
-            // e.preventDefault();
-            // onSubmit(formData);
-            // setFormData({
-            //     name: '',
-            //     imageUrl: '',
-            //     weather: ''
-            // });
             e.preventDefault();
             onSubmit(formData);
         };
@@ -98,21 +70,6 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                     required
                 />
             </label>
-            {/* <label className='modal__label'>
-                Weather
-                <select
-                    className="modal__input"
-                    name="weather"
-                    value={formData.weather}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">Select weather</option>
-                    <option value="hot">Hot</option>
-                    <option value="warm">Warm</option>
-                    <option value="cold">Cold</option>
-                </select>
-            </label> */}
             <label className='modal__label'>
                 Weather
                 <div className="modal__radio-group">
@@ -159,8 +116,6 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                     </div>
                 </div>
             </label>
-            
-
         </ModalWithForm>
     )
 }

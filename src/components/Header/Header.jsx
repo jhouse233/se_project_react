@@ -38,31 +38,7 @@ export default function Header({onOpenModal, location}) {
             </div>
             <div className="header-right">
                 <ToggleSwitch />
-                {/* <label className="header__toggle-switch">
-                    <input 
-                        type="checkbox" 
-                        id="header-switch"
-                        onChange={handleToggleSwitchChange}
-                        checked={currentTemperatureUnit === "F"}
-                    />
-                    <span className="header__toggle" 
-                        style={{
-                            backgroundImage: 
-                                `url(${currentTemperatureUnit === "F" ? toggleFahrenheit : toggleCelsius})`
-                        }}
-                        onMouseEnter={(e) => {
-                            if (currentTemperatureUnit === 'F'){
-                                e.target.style.backgroundImage = `url(${toggleFahrenheitHover})`;
-                            }
-                            
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.backgroundImage = `url(${currentTemperatureUnit === "F" ? toggleFahrenheit : toggleCelsius})`
-                        }}
-                    ></span>
 
-                </label> */}
-                {/* <button type="button" className="header__add-clothes-button" onClick={onOpenModal}>+ Add Clothes</button> */}
                 <button type="button" className="header__add-clothes-button" onClick={() => {
                     console.log('Button clicked in Header');
                     onOpenModal()

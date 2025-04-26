@@ -20,7 +20,6 @@ function ModalWithForm({ children, title, name, onClose, isOpen, onSubmit, butto
                 <form className="modal__form" onSubmit={handleSubmit}>
                     {children}
                     <button className="modal__submit" type="submit">
-                        {/* <img src={addGarment} alt="" className="modal__submit-icon" /> */}
                         {buttonText}
                     </button>
                 </form>
