@@ -32,7 +32,6 @@ const isValidUrl = (url) => {
 
 function App() {
 
-  const [isAddNewItemOpen, setIsAddNewItemOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cards, setCards] = useState([]);
 
@@ -91,7 +90,6 @@ function App() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsAddNewItemOpen(false);
   };
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -134,7 +132,8 @@ function App() {
   }
 
   const handleAddNewItemClick = () => {
-    setIsAddNewItemOpen(true);
+    // setIsAddNewItemOpen(true);
+    setIsModalOpen(true);
   }
 
   return (
