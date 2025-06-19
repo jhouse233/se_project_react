@@ -13,3 +13,6 @@ The idea of the application is pretty simple - we make a call to an API, which t
 * Javascript using React framework
 * HTML & CSS
 * BEM methodology
+
+### Back End
+git@github.com:jhouse233/se_project_express.git

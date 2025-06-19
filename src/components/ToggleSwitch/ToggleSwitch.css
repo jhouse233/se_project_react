@@ -7,6 +7,9 @@
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
+    /* padding: 0;
+    margin: 0; */
+    /* padding-top: 2px; */
 }
 
 .toggle-switch input[type="checkbox"] {

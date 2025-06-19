@@ -83,69 +83,6 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
-    },
-    {
-      "name": {
-        "_id": 1745194725461,
-        "name": "aaa",
-        "weather": "warm",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 17
-    },
-    {
-      "name": {
-        "_id": 1745194737656,
-        "name": "fds",
-        "weather": "warm",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 18
-    },
-    {
-      "name": {
-        "_id": 1745194767080,
-        "name": "fdafsd",
-        "weather": "warm",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 19
-    },
-    {
-      "name": {
-        "_id": 18,
-        "name": "",
-        "weather": "warm",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 20
-    },
-    {
-      "name": {
-        "_id": 1745195461998,
-        "name": "aadfas",
-        "weather": "warm",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 21
-    },
-    {
-      "name": {
-        "_id": 1745195504118,
-        "name": "dfsa",
-        "weather": "cold",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 22
-    },
-    {
-      "name": {
-        "_id": 1745195515801,
-        "name": "sa",
-        "weather": "hot",
-        "imageUrl": "https://images.unsplash.com/photo-1744179211676-f0536705fcd3?q=80&w=2501&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      },
-      "_id": 23
     }
   ]
 }

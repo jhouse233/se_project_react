@@ -27,7 +27,8 @@ const weatherImages = {
         Fog: fogDay,
         Mist: fogDay,
         Drizzle: rainDay,
-        Haze: fogDay
+        Haze: fogDay,
+        Smoke: fogDay
     },
     night: {
         Clear: sunnyNight,
@@ -38,7 +39,8 @@ const weatherImages = {
         Fog: fogNight,
         Mist: fogNight,
         Drizzle: rainNight,
-        Haze: fogNight
+        Haze: fogNight,
+        Smoke: fogNight
     }
 }
 export const convertToFahrenheit = (celsius) => {
@@ -49,7 +51,6 @@ export const convertToFahrenheit = (celsius) => {
 
 
 const WeatherCard = ({ day, type, weatherTemp }) => {
-
 
     const currentHour = new Date().getHours();
     const [selectedCard, setSelectedCard] = useState(null);

@@ -30,15 +30,15 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
             onSubmit(formData);
         };
 
-    const handleModalClose = () => {
-        onClose();
-    };
+    // const handleModalClose = () => {
+    //     onClose();
+    // };
 
     return (
         <ModalWithForm
             title="New garment"
             name="add-garment"
-            onClose={handleModalClose}
+            onClose={onClose}
             isOpen={isOpen}
             onSubmit={handleSubmit}
             buttonText="Add Garment"

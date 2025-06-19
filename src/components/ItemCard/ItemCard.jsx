@@ -1,24 +1,44 @@
 import './ItemCard.css';
+import { useContext } from 'react';
+import { CurrentUserContext, UserContext } from '../../contexts/CurrentUserContext';
 
-export default function ItemCard(props) {
+export default function ItemCard({ item, onCardLike, onCardClick, isLoggedIn }) {
+    const { currentUser } = useContext(UserContext);
 
-    const {name, imageUrl, weather} = props.item;
+    const isLiked = item.likes.some((id) => id === currentUser?._id);
 
-    function handleCardClick() {
-        props.onCardClick(props.item);
-    }
+    const itemLikeButtonClassName = `card__like-button ${
+        isLiked
+          ? "card__like-button_active"
+          : "card__like-button_inactive"
+      }`;
 
-    function handleEditButtonClick(e) {
+
+    const handleLike = (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        props.onEditClick(props.item);
+        onCardLike({ id: item._id, isLiked: isLiked })
     }
+
+    const handleCardClick = () => {
+        onCardClick(item);
+      };
+
 
     return(
         <li className="card" onClick={handleCardClick}>
-            <img src={imageUrl} alt="image" className="card__image" />
+            <img 
+                onClick={handleCardClick}
+                src={item.imageUrl}
+                alt={item.name}
+                className="card__image" 
+            />
+            <button 
+                onClick={handleLike}
+                className={itemLikeButtonClassName}></button>
             <div className="card__content">
-                <p className="card__name">{name}</p>
-                <p className="card__weather">{weather}</p>
+                <p className="card__name">{item.name}</p>
+                {/* <p className="card__weather">{weather}</p> */}
             </div>
         </li>
     )

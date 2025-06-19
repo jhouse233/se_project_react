@@ -7,7 +7,7 @@ import './Main.css';
 import ItemCard from '../ItemCard/ItemCard.jsx'
 
 
-export default function Main({weatherData, cards, onCardClick}) {
+export default function Main({ weatherData, cards, onCardClick, onCardLike }) {
     // console.log('Main component Rendering')
     const [selectedCard, setSelectedCard] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -62,10 +62,6 @@ export default function Main({weatherData, cards, onCardClick}) {
                     <ul className="cards__grid">
                         {cards
                         .filter((card) => {
-                            // console.log('Card weather type:', JSON.stringify(card.weatherType))
-                            // console.log('Current Weather type:', JSON.stringify(currentWeatherType))
-                            // console.log('Are they equal?:', card.weatherType === currentWeatherType)
-
                             return card.weather === currentWeatherType
                         })
                         .map((card) => {
@@ -75,6 +71,7 @@ export default function Main({weatherData, cards, onCardClick}) {
                                     item={card}
                                     onCardClick={onCardClick}
                                     onEditClick={handleEditClick}
+                                    onCardLike={onCardLike}
                                 />
                             )
                         })

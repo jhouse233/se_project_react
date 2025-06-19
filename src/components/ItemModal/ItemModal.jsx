@@ -1,9 +1,18 @@
 import './ItemModal.css';
 
 import closeIcon from '../../assets/modal__close.svg';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/CurrentUserContext';
 
 
-export default function ItemModal({name, imageUrl, onClose, weatherType, isOpen, onDelete}) {
+export default function ItemModal({name, imageUrl, onClose, weatherType, isOpen, onDelete, owner}) {
+    const { currentUser } = useContext(UserContext)
+
+    const isOwn = owner === currentUser?._id;
+
+    const itemDeleteButtonClassName = (
+        `modal__delete-button ${isOwn ? '' : 'modal__delete-button_hidden'}`
+      );
 
     return (
         <div className={`modal ${isOpen ? "modal_opened" : ""}`} onClick={onClose}>
@@ -17,7 +26,17 @@ export default function ItemModal({name, imageUrl, onClose, weatherType, isOpen,
                 <div className="modal__weather">
                     Weather: {weatherType}
                 </div>
-                <button className="modal__delete-button" type="button" onClick={onDelete}>Delete Item</button>
+                {isOwn ? (
+                    <button
+                        className={itemDeleteButtonClassName} 
+                        type="button" 
+                        onClick={onDelete}
+                     >
+                        Delete Item
+                    </button>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     )

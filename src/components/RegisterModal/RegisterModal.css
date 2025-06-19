@@ -1,0 +1,48 @@
+.register-modal__button-container {
+    font-family: "Cabinet Grotesk";
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 2px;
+    margin-top: 8px;
+  }
+
+.register-modal__link {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    font-family: "Cabinet Grotesk";
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+.register-modal__link:hover {
+    opacity: 0.6;
+    transition: 0.2s;
+  }
+
+  .register-modal__link_disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .register-modal__link_disabled:hover {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+.register-modal__login-link {
+    background-color: transparent;
+    color: black;
+    width: 100px;
+    height: 60px;
+
+}
+
+.register-modal__login-link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    opacity: 0.5;
+    transition: 0.2s;
+}
