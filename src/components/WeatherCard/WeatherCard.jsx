@@ -63,8 +63,7 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
             </div>
         );
     }
-
-    // Determine which image to show
+    
     let imageToShow;
     try {
         if (currentHour >= 6 && currentHour < 18) {
