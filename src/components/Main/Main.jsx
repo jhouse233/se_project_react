@@ -6,7 +6,6 @@ import WeatherCard from '../WeatherCard/WeatherCard.jsx'
 import './Main.css';
 import ItemCard from '../ItemCard/ItemCard.jsx'
 
-
 export default function Main({ weatherData, cards, onCardClick, onCardLike }) {
     // console.log('Main component Rendering')
     const [selectedCard, setSelectedCard] = useState(null);

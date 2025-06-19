@@ -49,7 +49,7 @@ export const convertToFahrenheit = (celsius) => {
 }
 
 
-const WeatherCard = ({ day, type, weatherTemp }) => {
+function WeatherCard({ day, type, weatherTemp }) {
 
     const currentHour = new Date().getHours();
     const [selectedCard, setSelectedCard] = useState(null);
@@ -63,7 +63,7 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
             </div>
         );
     }
-    
+
     let imageToShow;
     try {
         if (currentHour >= 6 && currentHour < 18) {
