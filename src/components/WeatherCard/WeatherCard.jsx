@@ -43,10 +43,10 @@ const weatherImages = {
         Smoke: fogNight
     }
 }
-export const convertToFahrenheit = (celsius) => {
+// export const convertToFahrenheit = (celsius) => {
 
-    return Math.round((celsius * 9/5) + 32);
-}
+//     return Math.round((celsius * 9/5) + 32);
+// }
 
 
 function WeatherCard({ day, type, weatherTemp }) {
