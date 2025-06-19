@@ -15,4 +15,4 @@ The idea of the application is pretty simple - we make a call to an API, which t
 * BEM methodology
 
 ### Back End
-git@github.com:jhouse233/se_project_express.git
+https://github.com/jhouse233/se_project_express.git
