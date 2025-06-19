@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; 
+import { React, useState, useEffect } from 'react'; 
 import { useTemperature } from '../../contexts/CurrentTemperatureUnitContext.jsx';
 
 import './WeatherCard.css'
