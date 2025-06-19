@@ -49,7 +49,7 @@ const weatherImages = {
 // }
 
 
-function WeatherCard({ day, type, weatherTemp }) {
+const WeatherCard = ({ day, type, weatherTemp }) => {
 
     const currentHour = new Date().getHours();
     const [selectedCard, setSelectedCard] = useState(null);
