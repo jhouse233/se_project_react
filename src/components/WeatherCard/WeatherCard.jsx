@@ -44,7 +44,6 @@ const weatherImages = {
     }
 }
 export const convertToFahrenheit = (celsius) => {
-    // console.log('RAW API remp data:', temperature);
 
     return Math.round((celsius * 9/5) + 32);
 }
@@ -57,10 +56,6 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const { currentTemperatureUnit } = useTemperature();
 
-    // useEffect(() => {
-    // }, [day, type, weatherTemp, currentTemperatureUnit]);
-
-    // Early return for loading state
     if (!weatherTemp || !type) {
         return (
             <div className="weather-card">
