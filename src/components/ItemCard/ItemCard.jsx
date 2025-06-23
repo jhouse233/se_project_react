@@ -33,9 +33,13 @@ export default function ItemCard({ item, onCardLike, onCardClick, isLoggedIn }) 
                 alt={item.name}
                 className="card__image" 
             />
-            <button 
+            {isLoggedIn && (
+                <button 
                 onClick={handleLike}
-                className={itemLikeButtonClassName}></button>
+                className={itemLikeButtonClassName}
+            ></button>
+            )}
+            
             <div className="card__content">
                 <p className="card__name">{item.name}</p>
                 {/* <p className="card__weather">{weather}</p> */}

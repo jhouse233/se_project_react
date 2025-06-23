@@ -2,13 +2,15 @@ import { useState, useEffect, useContext } from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import './EditProfileModal.css'
 import { UserContext } from '../../contexts/CurrentUserContext';
+import { useForm } from '../../hooks/useForm';
 
 export const EditProfileModal = ({ onClose, isOpen, handleEditUser }) => {
     const { currentUser } = useContext(UserContext);
-    const [values, setValues] = useState({
+    const { values, handleChange, setValues } = useForm({
         name: currentUser?.name || '',
         avatar: currentUser?.avatar || '',
-    });
+    })
+
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     useEffect(() => {
@@ -24,14 +26,6 @@ export const EditProfileModal = ({ onClose, isOpen, handleEditUser }) => {
         const isFormValid = values.name || values.avatar;
         setIsButtonDisabled(!isFormValid)
     }, [values]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value
-        });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -8,7 +8,8 @@ function ModalWithForm({ children, title, name, onClose, isOpen, onSubmit, butto
         e.preventDefault();
         onSubmit(e);
     }
-    // console.log('closeButton value:', closeButton)
+
+
     return (
 
         <div className={`modal modal_type_${name} ${isOpen ? "modal_opened" : ""}`}>

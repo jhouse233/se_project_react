@@ -26,6 +26,7 @@ import { signup, signin, checkToken, editProfile } from '../../utils/auth.js';
 import LoginModal from '../LoginModal/LoginModal.jsx';
 import EditProfileModal from '../EditProfileModal/EditProfileModal.jsx';
 // import { deleteTestItems } from '../../utils/api.js';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 
 const isValidUrl = (url) => {
   try {
@@ -43,6 +44,7 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading ] = useState(false);
 
   // Check to see if user is logged in
   const isLoggedIn = currentUser !== null;
@@ -51,7 +53,6 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // deleteTestItems();
     const fetchItems = async () => {
       try {
         const data = await getItems();
@@ -103,6 +104,22 @@ function App() {
     validateUser();
   }, [])
 
+  useEffect(() => {
+    if (!activeModal) return; 
+  
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        setActiveModal(null);
+      }
+    };
+  
+    document.addEventListener("keydown", handleEscClose);
+  
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   const handleAddGarment = async (formData) => {
     try {
         const savedGarment = await addItem(
@@ -132,36 +149,23 @@ function App() {
     }
   }
 
-  // Handlers for Login, Logout and Register
   const handleLogin = async (values) => {
-    try {
-      const userData = await signin(values)
-      const token = userData.token || userData.jwt
-
+    await handleSubmit(async () => {
+      const userData = await signin(values);
+      const token = userData.token || userData.jwt;
       localStorage.setItem('jwt', token);
-
+  
       const userProfile = await checkToken(token);
       setCurrentUser(userProfile);
-
-      setActiveModal(null);
       navigate('/');
-    } catch(error){
-      console.error('Error:', error)
-      return Promise.reject(error)
-    }
+    });
   };
 
   const handleRegister = async (values) => {
-    try {
-      const userData = await signup(values)
-
+    await handleSubmit(async () => {
+      const userData = await signup(values);
       setCurrentUser(userData);
-      setActiveModal(null);
-
-    } catch(error){
-      console.error('Error:', error)
-      return Promise.reject(error)
-    }
+    });
   };
 
   const handleLogOut = () => {
@@ -183,27 +187,32 @@ function App() {
     setActiveModal('register');
   }
 
+  // makeRequest and handleSubmit
+  const handleSubmit = async (makeRequest) => {
+    setIsLoading(true);
+    makeRequest()
+      .then(() => setActiveModal(null)) 
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }
+
   // User 
   const handleEditUser = async (values) => {
-    try {
-      const token = localStorage.getItem('jwt')
-      
+    await handleSubmit(async () => {
+      const token = localStorage.getItem('jwt');
+  
       if (!token) {
         console.error('No token found!');
         return navigateToLogin();
-      } 
-
+      }
+  
       const { name, avatar } = values;
       const userData = await editProfile({ name, avatar, token });
-      // const userData = await editProfile({ ...values, token })
-      
-      setCurrentUser(userData)
-      console.log('Updated user:', userData)
-      setActiveModal(null);
-    } catch(err) {
-      console.error('Error:', err)
-    }
-  }
+  
+      setCurrentUser(userData);
+      // console.log('Updated user:', userData);
+    });
+  };
 
   // UI Interactions
   const handleEditUserClick = () => {
@@ -272,16 +281,17 @@ function App() {
               <Route 
                 path="/profile" 
                 element={
-                  <Profile 
-                    cards={cards}
-                    onCardClick={handleCardClick}
-                    onDeleteItem={() => setActiveModal('delete')}
-                    handleAddNewItemClick={() => setActiveModal('add-garment')}
-                    handleEditUserClick={handleEditUserClick}
-                    handleLogOut={handleLogOut}
-                    onCardLike={handleCardLike}
-
-                  />
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile 
+                      cards={cards}
+                      onCardClick={handleCardClick}
+                      onDeleteItem={() => setActiveModal('delete')}
+                      handleAddNewItemClick={() => setActiveModal('add-garment')}
+                      handleEditUserClick={handleEditUserClick}
+                      handleLogOut={handleLogOut}
+                      onCardLike={handleCardLike}
+                    />
+                  </ProtectedRoute>
                 }/>
             </Routes>
 
@@ -289,6 +299,7 @@ function App() {
               isOpen={activeModal === 'add-garment'}
               onClose={() => setActiveModal(null)}
               onSubmit={handleAddGarment}
+              // isLoadingText={isLoading? 'Saving...' : 'Add Garment'}
             />
 
             <ItemModal
@@ -314,12 +325,14 @@ function App() {
               onClose={() => setActiveModal(null)}
               onSubmit={handleRegister}
               navigateToLogin={navigateToLogin}
+              isLoadingText={isLoading? 'Signing up...' : 'Next'}
             />
             <LoginModal 
             isOpen={activeModal === 'login'}
             onClose={() => setActiveModal(null)}
             onSubmit={handleLogin}
             navigateToRegister={navigateToRegister}
+            isLoadingText={isLoading? 'Logging in...' : 'Log in'}
             />
             <EditProfileModal 
               isOpen={activeModal === 'edit-profile'}

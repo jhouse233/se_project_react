@@ -13,7 +13,7 @@ export async function _request(url, options) {
     return _checkResponse(await fetch(url, options));
   } 
   
-  function _checkResponse(res) {
+  export function _checkResponse(res) {
     return res.ok ? res.json() : Promise.reject(`error ${res.status}`);
   }
   

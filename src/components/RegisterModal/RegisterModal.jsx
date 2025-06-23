@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
-
+import { useForm } from '../../hooks/useForm'
 import './RegisterModal.css';
 
-function RegisterModal({ isOpen, onClose, onSubmit, navigateToLogin }){
-    const [values, setValues] = useState({
-        email: '',
+function RegisterModal({ isOpen, onClose, onSubmit, navigateToLogin, isLoadingText }){
+
+    const { values, handleChange } = useForm({
+        email:'',
         password: '',
         name: '',
         avatar: ''
-    })
+    });
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -18,14 +19,6 @@ function RegisterModal({ isOpen, onClose, onSubmit, navigateToLogin }){
             values.email && values.password && values.name && values.avatar;
         setIsButtonDisabled(!isFormValid) 
     }, [values])
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value
-        });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -93,7 +86,7 @@ function RegisterModal({ isOpen, onClose, onSubmit, navigateToLogin }){
                     className={`register-modal__link ${isButtonDisabled ? "register-modal__link_disabled" : ""}`}
                     disabled={isButtonDisabled}
                 >
-                    Next
+                    {isLoadingText}
                 </button>
                 <button 
                     type='button'

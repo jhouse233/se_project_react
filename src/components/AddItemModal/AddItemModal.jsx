@@ -1,38 +1,29 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
-// import { useForm } from '../hooks/useForm.js';
+import { useForm } from '../../hooks/useForm.js';
 
-function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
-
-    const [formData, setFormData] = useState({
+function AddItemModal({ isOpen, onClose, onSubmit, buttonText, isLoadingText }) {
+    const { values, handleChange, setValues } = useForm({
         name: '',
         imageUrl: '',
-        weather: ''    
+        weather: ''
     })
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
-
     useEffect(() => {
-        setFormData({
-            name:'',
-            imageUrl: '',
-            weather: ''
-        });
+        if (isOpen){
+            setValues({
+                name:'',
+                imageUrl: '',
+                weather: ''
+            });
+        }
     }, [isOpen]);
+
         const handleSubmit = (e) => {
             e.preventDefault();
-            onSubmit(formData);
+            onSubmit(values);
         };
-
-    // const handleModalClose = () => {
-    //     onClose();
-    // };
 
     return (
         <ModalWithForm
@@ -42,6 +33,7 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
             isOpen={isOpen}
             onSubmit={handleSubmit}
             buttonText="Add Garment"
+            // isLoadingText={isLoadingText}
         >
             <label className="modal__label">
                 Name 
@@ -50,7 +42,7 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                     type="text"
                     name="name" 
                     placeholder="Name your item"
-                    value={formData.name}
+                    value={values.name}
                     minLength={2}
                     maxLength={32}
                     onChange={handleChange}
@@ -65,7 +57,7 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                     type="url"
                     name="imageUrl"
                     placeholder='Image URL'
-                    value={formData.imageUrl}
+                    value={values.imageUrl}
                     onChange={handleChange}
                     required
                 />
@@ -80,7 +72,7 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                             id="hot"
                             name="weather"
                             value="hot"
-                            checked={formData.weather === "hot"}
+                            checked={values.weather === "hot"}
                             onChange={handleChange}
                             required
                         />
@@ -94,7 +86,7 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                             id="warm"
                             name="weather"
                             value="warm"
-                            checked={formData.weather === "warm"}
+                            checked={values.weather === "warm"}
                             onChange={handleChange}
                             required
                         />
@@ -108,7 +100,7 @@ function AddItemModal({ isOpen, onClose, onSubmit, buttonText }) {
                             id="cold"
                             name="weather"
                             value="cold"
-                            checked={formData.weather === "cold"}
+                            checked={values.weather === "cold"}
                             onChange={handleChange}
                             required
                         />

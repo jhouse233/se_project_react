@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import './LoginModal.css';
+import { useForm } from '../../hooks/useForm';
 
+function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, isLoadingText }){
 
-function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, orRegister }){
-    const [values, setValues] = useState({
+    const { values, handleChange } = useForm({
         email: '',
-        password: '',
-    })
+        password: ''
+    });
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -15,14 +16,6 @@ function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, orRegister 
         const isFormValid = values.email && values.password;
         setIsButtonDisabled(!isFormValid)
     }, [values]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value
-        });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,7 +31,8 @@ function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, orRegister 
             onSubmit={handleSubmit}
             showDefaultButton={false}
         >
-            <label className="modal__label">
+            <label className="modal__label" htmlFor='email' >
+                Email
                 <input 
                     type="email" 
                     name='email'
@@ -47,9 +41,11 @@ function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, orRegister 
                     required
                     value={values.email}
                     onChange={handleChange}
+                    id='email'
                 />
             </label>
-            <label className="modal__label">
+            <label className="modal__label" htmlFor='password'>
+                Password
                 <input 
                     type="password" 
                     name='password'
@@ -58,6 +54,7 @@ function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, orRegister 
                     required
                     value={values.password}
                     onChange={handleChange}
+                    id='password'
                 />
             </label>
             <div className="login-modal__button-container">
@@ -66,7 +63,7 @@ function LoginModal({ isOpen, onClose, onSubmit, navigateToRegister, orRegister 
                     className={`login-modal__link ${isButtonDisabled ? "login-modal__link_disabled" : ''}`}
                     disabled={isButtonDisabled}
                 >
-                    Log in
+                    {isLoadingText}
                 </button>
                 <button
                     type='button'
