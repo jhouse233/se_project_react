@@ -24,6 +24,12 @@ export default function ItemCard({ item, onCardLike, onCardClick, isLoggedIn }) 
         onCardClick(item);
       };
 
+    console.log("Is User Logged In?", isLoggedIn);
+    console.log("Likes array: ", item.likes);
+    console.log("Current user ID: ", currentUser._id);
+    console.log("Current user in context: ", currentUser);
+
+
 
     return(
         <li className="card" onClick={handleCardClick}>
@@ -35,9 +41,9 @@ export default function ItemCard({ item, onCardLike, onCardClick, isLoggedIn }) 
             />
             {isLoggedIn && (
                 <button 
-                onClick={handleLike}
-                className={itemLikeButtonClassName}
-            ></button>
+                    onClick={handleLike}
+                    className={itemLikeButtonClassName}
+                ></button>
             )}
             
             <div className="card__content">

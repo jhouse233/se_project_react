@@ -271,6 +271,7 @@ function App() {
                         onCardClick={handleCardClick}
                         onDeleteItem={() => setActiveModal('delete')}
                         onCardLike={handleCardLike}
+                        isLoggedIn={isLoggedIn}
                       />
                     </>
                   ) : (
@@ -290,6 +291,7 @@ function App() {
                       handleEditUserClick={handleEditUserClick}
                       handleLogOut={handleLogOut}
                       onCardLike={handleCardLike}
+                      isLoggedIn={isLoggedIn}
                     />
                   </ProtectedRoute>
                 }/>
@@ -311,6 +313,7 @@ function App() {
               isOpen={activeModal === 'preview'}
               onDelete={()=> setActiveModal('delete')}
               owner={selectedCard?.owner}
+              isLoggedIn={isLoggedIn}
             />
             <DeleteConfirmModal 
               isOpen={activeModal === 'delete'}

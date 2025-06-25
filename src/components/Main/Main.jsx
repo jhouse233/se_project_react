@@ -6,7 +6,7 @@ import WeatherCard from '../WeatherCard/WeatherCard.jsx'
 import './Main.css';
 import ItemCard from '../ItemCard/ItemCard.jsx'
 
-export default function Main({ weatherData, cards, onCardClick, onCardLike }) {
+export default function Main({ weatherData, cards, onCardClick, onCardLike, isLoggedIn }) {
     // console.log('Main component Rendering')
     const [selectedCard, setSelectedCard] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -71,6 +71,7 @@ export default function Main({ weatherData, cards, onCardClick, onCardLike }) {
                                     onCardClick={onCardClick}
                                     onEditClick={handleEditClick}
                                     onCardLike={onCardLike}
+                                    isLoggedIn={isLoggedIn}
                                 />
                             )
                         })
