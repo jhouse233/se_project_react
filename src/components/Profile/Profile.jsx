@@ -4,7 +4,7 @@ import SideBar from '../SideBar/SideBar';
 import { useContext } from 'react'
 import './Profile.css';
 
-export default function Profile({ cards, onCardClick, onDeleteItem, handleAddNewItemClick, handleEditUserClick, handleLogOut, onCardLike }) {
+export default function Profile({ cards, onCardClick, onDeleteItem, handleAddNewItemClick, handleEditUserClick, handleLogOut, onCardLike, isLoggedIn }) {
     console.log('Cards in Profile:', cards);
     return (
         <main className="profile-page">
@@ -19,6 +19,7 @@ export default function Profile({ cards, onCardClick, onDeleteItem, handleAddNew
                     onDeleteItem={onDeleteItem}
                     handleAddNewItemClick={handleAddNewItemClick}
                     onCardLike={onCardLike}
+                    isLoggedIn={isLoggedIn}
                 />
             </div>
         </main>
