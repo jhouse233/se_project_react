@@ -53,6 +53,8 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+    
     const fetchItems = async () => {
       try {
         const data = await getItems();
