@@ -12,7 +12,7 @@ import rainDay from '../../assets/rain_day.svg'
 import rainNight from '../../assets/rain_night.svg'
 import stormDay from '../../assets/storm_day.svg'
 import stormNight from '../../assets/storm_night.svg'
-import snowmDay from '../../assets/snow_day.svg'
+import snowDay from '../../assets/snow_day.svg'
 import snowNight from '../../assets/snow_night.svg'
 import fogDay from '../../assets/fog_day.svg'
 import fogNight from '../../assets/fog_night.svg'
@@ -23,7 +23,7 @@ const weatherImages = {
         Clouds: cloudyDay,
         Rain: rainDay,
         Thunderstorm: stormDay,
-        Snow: snowmDay,
+        Snow: snowDay,
         Fog: fogDay,
         Mist: fogDay,
         Drizzle: rainDay,
@@ -71,6 +71,8 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
         } else {
             imageToShow = weatherImages.night[type];
         }
+        console.log('image to show:', imageToShow)
+        console.log("Rendered image src:", imageToShow);
     } catch(error) {
         return (
             <div className="weather-card">
